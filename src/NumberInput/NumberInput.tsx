@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import {
   type UseControllerProps,
   useController,
@@ -8,6 +9,7 @@ import {
   NumberInput as $NumberInput,
   type NumberInputProps as $NumberInputProps,
 } from "@mantine/core";
+import { useMergeRefs } from "../useMergedRef";
 
 export type NumberInputProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -16,21 +18,24 @@ export type NumberInputProps<
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$NumberInputProps, "value" | "defaultValue">;
 
-export function NumberInput<
+export const NumberInput = forwardRef(function NumberInput<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
->({
-  name,
-  control,
-  defaultValue,
-  rules,
-  shouldUnregister,
-  onChange,
-  ...props
-}: NumberInputProps<TFieldValues, TName, TTransformedValues>) {
+>(
+  {
+    name,
+    control,
+    defaultValue,
+    rules,
+    shouldUnregister,
+    onChange,
+    ...props
+  }: NumberInputProps<TFieldValues, TName, TTransformedValues>,
+  ref: React.Ref<HTMLInputElement>,
+) {
   const {
-    field: { value, onChange: fieldOnChange, ...field },
+    field: { value, onChange: fieldOnChange, ref: hookRef, ...field },
     fieldState,
   } = useController<TFieldValues, TName, TTransformedValues>({
     name,
@@ -40,8 +45,11 @@ export function NumberInput<
     shouldUnregister,
   });
 
+  const mergedRef = useMergeRefs(hookRef, ref);
+
   return (
     <$NumberInput
+      ref={mergedRef}
       value={value}
       onChange={(e) => {
         fieldOnChange(e);
@@ -52,4 +60,4 @@ export function NumberInput<
       {...props}
     />
   );
-}
+});
