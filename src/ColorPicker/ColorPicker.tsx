@@ -2,16 +2,25 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   ColorPicker as $ColorPicker,
   type ColorPickerProps as $ColorPickerProps,
 } from "@mantine/core";
 
-export type ColorPickerProps<T extends FieldValues> = UseControllerProps<T> &
+export type ColorPickerProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$ColorPickerProps, "value" | "defaultValue">;
 
-export function ColorPicker<T extends FieldValues>({
+export function ColorPicker<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,10 +28,10 @@ export function ColorPicker<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: ColorPickerProps<T>) {
+}: ColorPickerProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
