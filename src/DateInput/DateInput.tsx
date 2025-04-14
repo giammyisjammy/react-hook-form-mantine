@@ -1,4 +1,5 @@
 import {
+  type FieldPath,
   type FieldValues,
   useController,
   type UseControllerProps,
@@ -8,10 +9,18 @@ import {
   type DateInputProps as $DateInputProps,
 } from "@mantine/dates";
 
-export type DateInputProps<T extends FieldValues> = UseControllerProps<T> &
+export type DateInputProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$DateInputProps, "value" | "defaultValue">;
 
-export function DateInput<T extends FieldValues>({
+export function DateInput<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,11 +28,11 @@ export function DateInput<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: DateInputProps<T>) {
+}: DateInputProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
