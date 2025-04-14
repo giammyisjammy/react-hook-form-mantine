@@ -2,16 +2,25 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   Rating as $Rating,
   type RatingProps as $RatingProps,
 } from "@mantine/core";
 
-export type RatingProps<T extends FieldValues> = UseControllerProps<T> &
+export type RatingProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$RatingProps, "value" | "defaultValue">;
 
-export function Rating<T extends FieldValues>({
+export function Rating<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,10 +28,10 @@ export function Rating<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: RatingProps<T>) {
+}: RatingProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
