@@ -2,16 +2,35 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   FileInput as $FileInput,
   type FileInputProps as $FileInputProps,
 } from "@mantine/core";
 
-export type FileInputProps<T extends FieldValues> = UseControllerProps<T> &
-  Omit<$FileInputProps, "value" | "defaultValue">;
+export type FileInputProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+  Multiple = false,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
+  Omit<$FileInputProps, "value" | "defaultValue" | "multiple"> & {
+    /** Determines whether user can pick more than one file, `false` by default */
+    multiple?: Multiple;
 
-export function FileInput<T extends FieldValues>({
+    /** Controlled component value */
+    value?: Multiple extends true ? File[] : File | null;
+
+    /** Uncontrolled component default value */
+    defaultValue?: Multiple extends true ? File[] : File | null;
+  };
+
+export function FileInput<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,11 +38,11 @@ export function FileInput<T extends FieldValues>({
   shouldUnregister,
   multiple,
   ...props
-}: FileInputProps<T>) {
+}: FileInputProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
