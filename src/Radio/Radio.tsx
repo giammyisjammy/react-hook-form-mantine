@@ -2,14 +2,23 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import { Radio as $Radio, type RadioProps as $RadioProps } from "@mantine/core";
 import { RadioGroup } from "./RadioGroup/RadioGroup";
 
-export type RadioProps<T extends FieldValues> = UseControllerProps<T> &
+export type RadioProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$RadioProps, "value" | "defaultValue">;
 
-export function Radio<T extends FieldValues>({
+export function Radio<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -17,10 +26,10 @@ export function Radio<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: RadioProps<T>) {
+}: RadioProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
