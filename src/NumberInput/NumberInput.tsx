@@ -2,16 +2,25 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   NumberInput as $NumberInput,
   type NumberInputProps as $NumberInputProps,
 } from "@mantine/core";
 
-export type NumberInputProps<T extends FieldValues> = UseControllerProps<T> &
+export type NumberInputProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$NumberInputProps, "value" | "defaultValue">;
 
-export function NumberInput<T extends FieldValues>({
+export function NumberInput<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,11 +28,11 @@ export function NumberInput<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: NumberInputProps<T>) {
+}: NumberInputProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
