@@ -1,4 +1,5 @@
 import {
+  type FieldPath,
   type FieldValues,
   useController,
   type UseControllerProps,
@@ -9,10 +10,18 @@ import {
 } from "@mantine/core";
 import { CheckboxGroup } from "./CheckBoxGroup/CheckBoxGroup";
 
-export type CheckboxProps<T extends FieldValues> = UseControllerProps<T> &
+export type CheckboxProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$CheckboxProps, "checked" | "defaultValue">;
 
-export const Checkbox = <T extends FieldValues>({
+export const Checkbox = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -20,11 +29,11 @@ export const Checkbox = <T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: CheckboxProps<T>) => {
+}: CheckboxProps<TFieldValues, TName, TTransformedValues>) => {
   const {
     field: { value, onChange: fieldOnChange, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
