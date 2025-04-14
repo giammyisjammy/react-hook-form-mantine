@@ -2,16 +2,25 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   MultiSelect as $MultiSelect,
   type MultiSelectProps as $MultiSelectProps,
 } from "@mantine/core";
 
-export type MultiSelectProps<T extends FieldValues> = UseControllerProps<T> &
+export type MultiSelectProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$MultiSelectProps, "value" | "defaultValue">;
 
-export function MultiSelect<T extends FieldValues>({
+export function MultiSelect<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,11 +28,11 @@ export function MultiSelect<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: MultiSelectProps<T>) {
+}: MultiSelectProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
