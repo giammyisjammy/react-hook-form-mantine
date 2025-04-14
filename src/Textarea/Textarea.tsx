@@ -2,16 +2,25 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   Textarea as $Textarea,
   type TextareaProps as $TextareaProps,
 } from "@mantine/core";
 
-export type TextareaProps<T extends FieldValues> = UseControllerProps<T> &
+export type TextareaProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$TextareaProps, "value" | "defaultValue">;
 
-export function Textarea<T extends FieldValues>({
+export function Textarea<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,11 +28,11 @@ export function Textarea<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: TextareaProps<T>) {
+}: TextareaProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
