@@ -2,16 +2,25 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   PinInput as $PinInput,
   type PinInputProps as $PinInputProps,
 } from "@mantine/core";
 
-export type PinInputProps<T extends FieldValues> = UseControllerProps<T> &
+export type PinInputProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$PinInputProps, "value" | "defaultValue">;
 
-export function PinInput<T extends FieldValues>({
+export function PinInput<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,11 +28,11 @@ export function PinInput<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: PinInputProps<T>) {
+}: PinInputProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
