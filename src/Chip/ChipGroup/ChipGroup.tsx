@@ -2,16 +2,25 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   type ChipGroupProps as $ChipGroupProps,
   ChipGroup as $ChipGroup,
 } from "@mantine/core";
 
-export type ChipGroupProps<T extends FieldValues> = UseControllerProps<T> &
+export type ChipGroupProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$ChipGroupProps<boolean>, "value" | "defaultValue">;
 
-export const ChipGroup = <T extends FieldValues>({
+export const ChipGroup = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,10 +28,10 @@ export const ChipGroup = <T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: ChipGroupProps<T>) => {
+}: ChipGroupProps<TFieldValues, TName, TTransformedValues>) => {
   const {
     field: { value, onChange: fieldOnChange, ref, ...field },
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
