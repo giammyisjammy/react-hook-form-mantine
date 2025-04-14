@@ -2,24 +2,32 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import { Input as $Input, type InputProps as $InputProps } from "@mantine/core";
 
-export type InputProps<T extends FieldValues> = UseControllerProps<T> &
-  $InputProps;
+export type InputProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> & $InputProps;
 
-export function Input<T extends FieldValues>({
+export function Input<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
   rules,
   shouldUnregister,
   ...props
-}: InputProps<T>) {
+}: InputProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
