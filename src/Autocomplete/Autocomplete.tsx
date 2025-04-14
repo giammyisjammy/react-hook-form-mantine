@@ -1,4 +1,5 @@
 import {
+  type FieldPath,
   type FieldValues,
   useController,
   type UseControllerProps,
@@ -8,10 +9,18 @@ import {
   type AutocompleteProps as $AutocompleteProps,
 } from "@mantine/core";
 
-export type AutocompleteProps<T extends FieldValues> = UseControllerProps<T> &
+export type AutocompleteProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$AutocompleteProps, "value" | "defaultValue">;
 
-export function Autocomplete<T extends FieldValues>({
+export function Autocomplete<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,11 +28,11 @@ export function Autocomplete<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: AutocompleteProps<T>) {
+}: AutocompleteProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
