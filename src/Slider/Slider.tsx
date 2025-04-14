@@ -2,16 +2,25 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   Slider as $Slider,
   type SliderProps as $SliderProps,
 } from "@mantine/core";
 
-export type SliderProps<T extends FieldValues> = UseControllerProps<T> &
+export type SliderProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$SliderProps, "value" | "defaultValue">;
 
-export function Slider<T extends FieldValues>({
+export function Slider<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,10 +28,10 @@ export function Slider<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: SliderProps<T>) {
+}: SliderProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
