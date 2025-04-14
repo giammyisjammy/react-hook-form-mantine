@@ -2,16 +2,25 @@ import {
   type UseControllerProps,
   useController,
   type FieldValues,
+  type FieldPath,
 } from "react-hook-form";
 import {
   PasswordInput as $PasswordInput,
   type PasswordInputProps as $PasswordInputProps,
 } from "@mantine/core";
 
-export type PasswordInputProps<T extends FieldValues> = UseControllerProps<T> &
+export type PasswordInputProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> &
   Omit<$PasswordInputProps, "value" | "defaultValue">;
 
-export function PasswordInput<T extends FieldValues>({
+export function PasswordInput<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TTransformedValues = TFieldValues,
+>({
   name,
   control,
   defaultValue,
@@ -19,11 +28,11 @@ export function PasswordInput<T extends FieldValues>({
   shouldUnregister,
   onChange,
   ...props
-}: PasswordInputProps<T>) {
+}: PasswordInputProps<TFieldValues, TName, TTransformedValues>) {
   const {
     field: { value, onChange: fieldOnChange, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController<TFieldValues, TName, TTransformedValues>({
     name,
     control,
     defaultValue,
