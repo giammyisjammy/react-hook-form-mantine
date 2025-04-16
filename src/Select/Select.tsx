@@ -43,9 +43,9 @@ export function Select<
   return (
     <$Select
       value={value}
-      onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+      onChange={(value, option) => {
+        fieldOnChange(value, option);
+        onChange?.(value, option);
       }}
       error={fieldState.error?.message}
       {...field}
