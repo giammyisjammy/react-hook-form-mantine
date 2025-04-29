@@ -1,12 +1,13 @@
-import { Form, useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form'
 import {
+  Autocomplete,
   Checkbox,
   Chip,
   ColorInput,
   ColorPicker,
-  DatePickerInput,
   FileInput,
   JsonInput,
+  MultiSelect,
   NativeSelect,
   NumberInput,
   PasswordInput,
@@ -19,20 +20,29 @@ import {
   Switch,
   Textarea,
   TextInput,
-} from "react-hook-form-mantine";
-import { Button, Group, Paper, Container, Stack } from "@mantine/core";
-import { DevTool } from "@hookform/devtools";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+  DateInput,
+  DatePickerInput,
+  DateTimePicker,
+  MonthPickerInput,
+  TimeInput,
+  YearPickerInput,
+} from 'react-hook-form-mantine'
+
+import { Paper, Container, Stack, Title, Group, Button } from '@mantine/core'
+
+import { DevTool } from '@hookform/devtools'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { z } from 'zod'
 
 const schema = z.object({
+  autocomplete: z.string(),
   checkbox: z.boolean(),
   chip: z.boolean(),
-  chipgroupMultiple: z.array(z.string()),
-  chipgroupSingle: z.string(),
+  chipGroupMultiple: z.array(z.string()),
+  chipGroupSingle: z.string(),
   colorInput: z.string(),
   colorPicker: z.string(),
-  datepicker: z.date().nullable(),
   fileInput: z.any(),
   jsonInput: z.string(),
   multiSelect: z.any(),
@@ -48,200 +58,237 @@ const schema = z.object({
   switch: z.boolean(),
   textarea: z.string(),
   textInput: z.string(),
-  transferList: z.any(),
-});
 
-type FormSchemaType = z.infer<typeof schema>;
+  // @mantine/dates
+  dateInput: z.date().nullable(),
+  datePickerInput: z.date().nullable(),
+  dateTimePicker: z.date().nullable(),
+  monthPickerInput: z.date().nullable(),
+  timeInput: z.string(),
+  yearPickerInput: z.date().nullable(),
+})
 
-export default function App() {
-  const { control } = useForm<FormSchemaType>({
+// type FormSchemaIn = z.input<typeof schema>
+// type FormSchemaOut = z.output<typeof schema>
+type FormSchemaType = z.infer<typeof schema>
+
+const now = new Date(Date.now())
+
+function App() {
+  const { control, handleSubmit } = useForm<FormSchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
+      // @mantine/core
+      autocomplete: '',
       checkbox: true,
       chip: true,
-      chipgroupMultiple: [],
-      chipgroupSingle: "react",
-      colorInput: "",
-      colorPicker: "",
-      datepicker: null,
+      chipGroupMultiple: [],
+      chipGroupSingle: 'react',
+      colorInput: '',
+      colorPicker: '',
       fileInput: null,
-      jsonInput: "",
+      jsonInput: '',
       multiSelect: [],
-      nativeSelect: "",
+      nativeSelect: '',
       numberInput: 18,
-      passwordInput: "",
-      pinInput: "",
-      radio: "",
+      passwordInput: '',
+      pinInput: '',
+      radio: '',
       rating: 2,
-      segmentedControl: "",
-      select: "",
+      segmentedControl: '',
+      select: '',
       slider: 40,
       switch: false,
-      textarea: "",
-      textInput: "",
+      textarea: '',
+      textInput: '',
+
+      // @mantine/dates
+      dateInput: now,
+      datePickerInput: now,
+      dateTimePicker: now,
+      monthPickerInput: now,
+      timeInput: `${now.getHours()}:${now.getMinutes()}`,
+      yearPickerInput: now,
     },
-  });
+  })
 
   return (
-    <div className="App">
-      <Container size={1000}>
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <Form
-            control={control}
-            onSubmit={(e) => console.log(e.data)}
-            onError={(e) => console.log(e)}
-          >
-            <Stack>
-              <Checkbox
-                name="checkbox"
-                value="Test"
-                control={control}
-                label="I agree to sell my privacy"
-              />
-              <Chip name="chip" control={control}>
-                Awesome chip
-              </Chip>
-              <Chip.Group name="chipgroupSingle" control={control}>
-                <Chip.Item value="1">1</Chip.Item>
-                <Chip.Item value="2">2</Chip.Item>
-                <Chip.Item value="3">3</Chip.Item>
-              </Chip.Group>
-              <Chip.Group multiple name="chipgroupMultiple" control={control}>
-                <Chip.Item value="react">React</Chip.Item>
-                <Chip.Item value="ng">Angular</Chip.Item>
-                <Chip.Item value="svelte">Svelte</Chip.Item>
-              </Chip.Group>
-              <ColorInput
-                name="colorInput"
-                control={control}
-                placeholder="Pick color"
-                label="Your favorite color"
-              />
-              <ColorPicker name="colorPicker" control={control} />
-              <DatePickerInput
-                label="Pick date"
-                placeholder="Pick date"
-                name="datepicker"
-                control={control}
-              />
-              <FileInput
-                name="fileInput"
-                control={control}
-                placeholder="Pick file"
-                label="Your resume"
-                withAsterisk
-              />
-              <JsonInput
-                name="jsonInput"
-                control={control}
-                label="Your package.json"
-                placeholder="Textarea will autosize to fit the content"
-                validationError="Invalid json"
-                formatOnBlur
-                autosize
-                minRows={4}
-              />
-              <TextInput name="textInput" control={control} label="TextBox" />
-              <NativeSelect
-                name="nativeSelect"
-                control={control}
-                data={["React", "Vue", "Angular", "Svelte"]}
-                label="Select your favorite framework/library"
-                description="This is anonymous"
-                withAsterisk
-              />
-              <NumberInput
-                name="numberInput"
-                control={control}
-                placeholder="Your age"
-                label="Your age"
-                withAsterisk
-              />
-              <PasswordInput
-                name="passwordInput"
-                control={control}
-                placeholder="Password"
-                label="Password"
-                description="Password must include at least one letter, number and special character"
-                withAsterisk
-              />
-              <Group>
-                <PinInput name="pinInput" control={control} />
-              </Group>
-              <Radio.Group
-                name="radio"
-                control={control}
-                label="Select your favorite framework/library"
-                description="This is anonymous"
-                withAsterisk
-              >
-                <Group mt="xs">
-                  <Radio.Item value="react" label="React" />
-                  <Radio.Item value="svelte" label="Svelte" />
-                  <Radio.Item value="ng" label="Angular" />
-                  <Radio.Item value="vue" label="Vue" />
-                </Group>
-              </Radio.Group>
-              <Rating name="rating" control={control} />
-              <SegmentedControl
-                name="segmentedControl"
-                control={control}
-                data={[
-                  { label: "React", value: "react" },
-                  { label: "Angular", value: "ng" },
-                  { label: "Vue", value: "vue" },
-                  { label: "Svelte", value: "svelte" },
-                ]}
-              />
-              <Select
-                name="select"
-                control={control}
-                label="Your favorite framework/library"
-                placeholder="Pick one"
-                data={[
-                  { value: "react", label: "React" },
-                  { value: "ng", label: "Angular" },
-                  { value: "svelte", label: "Svelte" },
-                  { value: "vue", label: "Vue" },
-                ]}
-              />
-              <Slider
-                name="slider"
-                control={control}
-                marks={[
-                  { value: 20, label: "20%" },
-                  { value: 50, label: "50%" },
-                  { value: 80, label: "80%" },
-                ]}
-              />
-              <Switch
-                name="switch"
-                control={control}
-                label="I agree to sell my privacy"
-              />
-              <Textarea
-                name="textarea"
-                control={control}
-                placeholder="Your comment"
-                label="Your comment"
-                withAsterisk
-              />
-              <TextInput
-                name="textInput"
-                control={control}
-                placeholder="Your name"
-                label="Full name"
-                withAsterisk
-              />
+    <Container size={1000}>
+      <Paper withBorder shadow='md' p={30} mt={30} radius='md'>
+        <form
+          onSubmit={handleSubmit(
+            (values) => console.log(values),
+            (values) => console.log(values)
+          )}
+        >
+          <DevTool control={control} />
+          <Stack>
+            <Title order={2}>@mantine/core</Title>
 
-              <Group mt="md">
-                <Button type="submit">Submit</Button>
+            <Autocomplete
+              name='autocomplete'
+              label='Autocomplete'
+              data={[
+                { label: 'React', value: 'react' },
+                { label: 'Angular', value: 'ng' },
+                { label: 'Vue', value: 'vue' },
+                { label: 'Svelte', value: 'svelte' },
+              ]}
+              control={control}
+            />
+            <Checkbox name='checkbox' label='Checkbox' control={control} />
+            <Chip name='chip' control={control}>
+              Awesome Chip
+            </Chip>
+            <Chip.Group multiple name='chipGroupMultiple' control={control}>
+              <Chip.Item value='react'>React</Chip.Item>
+              <Chip.Item value='ng'>Angular</Chip.Item>
+              <Chip.Item value='svelte'>Svelte</Chip.Item>
+            </Chip.Group>
+            <Chip.Group name='chipGroupSingle' control={control}>
+              <Chip.Item value='1'>1</Chip.Item>
+              <Chip.Item value='2'>2</Chip.Item>
+              <Chip.Item value='3'>3</Chip.Item>
+            </Chip.Group>
+            <ColorInput
+              name='colorInput'
+              label='ColorInput'
+              control={control}
+            />
+            <ColorPicker name='colorPicker' control={control} />
+            <FileInput name='fileInput' label='FileInput' control={control} />
+            <JsonInput
+              name='jsonInput'
+              label='JsonInput'
+              control={control}
+              formatOnBlur
+              autosize
+              minRows={4}
+            />
+            <MultiSelect
+              name='multiSelect'
+              label='MultiSelect'
+              data={['React', 'Vue', 'Angular', 'Svelte']}
+              control={control}
+            />
+            <NativeSelect
+              name='nativeSelect'
+              label='NativeSelect'
+              data={['React', 'Vue', 'Angular', 'Svelte']}
+              control={control}
+            />
+            <NumberInput
+              name='numberInput'
+              label='NumberInput'
+              control={control}
+              withAsterisk
+            />
+            <PasswordInput
+              name='passwordInput'
+              label='PasswordInput'
+              control={control}
+              withAsterisk
+            />
+            <PinInput name='pinInput' control={control} />
+            <Radio.Group
+              name='radio'
+              control={control}
+              label='Radio'
+              withAsterisk
+            >
+              <Group mt='xs'>
+                {[
+                  { label: 'React', value: 'react' },
+                  { label: 'Angular', value: 'ng' },
+                  { label: 'Vue', value: 'vue' },
+                  { label: 'Svelte', value: 'svelte' },
+                ].map((item) => (
+                  <Radio.Item
+                    key={item.value}
+                    value={item.value}
+                    label={item.label}
+                  />
+                ))}
               </Group>
-            </Stack>
-          </Form>
-        </Paper>
-      </Container>
-      <DevTool control={control} />
-    </div>
-  );
+            </Radio.Group>
+            <Rating name='rating' control={control} />
+            <SegmentedControl
+              name='segmentedControl'
+              data={[
+                { label: 'React', value: 'react' },
+                { label: 'Angular', value: 'ng' },
+                { label: 'Vue', value: 'vue' },
+                { label: 'Svelte', value: 'svelte' },
+              ]}
+              control={control}
+            />
+            <Select
+              name='select'
+              label='Select'
+              data={[
+                { label: 'React', value: 'react' },
+                { label: 'Angular', value: 'ng' },
+                { label: 'Vue', value: 'vue' },
+                { label: 'Svelte', value: 'svelte' },
+              ]}
+              control={control}
+            />
+            <Slider
+              name='slider'
+              label='Slider'
+              control={control}
+              marks={[
+                { value: 20, label: '20%' },
+                { value: 50, label: '50%' },
+                { value: 80, label: '80%' },
+              ]}
+            />
+            <Switch name='switch' label='Switch' control={control} />
+            <Textarea name='textarea' label='Textarea' control={control} />
+            <TextInput name='textInput' label='TextInput' control={control} />
+
+            <Title order={2}>@mantine/dates</Title>
+
+            <DateInput
+              clearable
+              label='DateInput'
+              name='dateInput'
+              control={control}
+            />
+            <DatePickerInput
+              clearable
+              label='DatePickerInput'
+              name='datePickerInput'
+              control={control}
+            />
+            <DateTimePicker
+              clearable
+              label='DateTimePicker'
+              name='dateTimePicker'
+              control={control}
+            />
+            <MonthPickerInput
+              clearable
+              label='MonthPickerInput'
+              name='monthPickerInput'
+              control={control}
+            />
+            <TimeInput label='TimeInput' name='timeInput' control={control} />
+            <YearPickerInput
+              clearable
+              label='YearPickerInput'
+              name='yearPickerInput'
+              control={control}
+            />
+
+            <Group>
+              <Button type='submit'>Submit</Button>
+            </Group>
+          </Stack>
+        </form>
+      </Paper>
+    </Container>
+  )
 }
+
+export default App
