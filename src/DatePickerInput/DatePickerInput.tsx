@@ -3,19 +3,19 @@ import {
   type FieldValues,
   useController,
   type UseControllerProps,
-} from "react-hook-form";
+} from 'react-hook-form'
 import {
   DatePickerInput as $DatePickerInput,
   type DatePickerType,
   type DatePickerInputProps as $DatePickerInputProps,
-} from "@mantine/dates";
+} from '@mantine/dates'
 
 export type DatePickerInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$DatePickerInputProps<DatePickerType>, "value" | "defaultValue">;
+  Omit<$DatePickerInputProps<DatePickerType>, 'value' | 'defaultValue'>
 
 export function DatePickerInput<
   TFieldValues extends FieldValues = FieldValues,
@@ -39,18 +39,18 @@ export function DatePickerInput<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$DatePickerInput
       error={fieldState.error?.message}
       value={value}
       onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+        fieldOnChange(e)
+        onChange?.(e)
       }}
       {...field}
       {...props}
     />
-  );
+  )
 }

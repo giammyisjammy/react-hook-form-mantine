@@ -1,20 +1,20 @@
 import {
   type CheckboxGroupProps as $CheckboxGroupProps,
   CheckboxGroup as $CheckboxGroup,
-} from "@mantine/core";
+} from '@mantine/core'
 import {
   type FieldPath,
   type FieldValues,
   useController,
   type UseControllerProps,
-} from "react-hook-form";
+} from 'react-hook-form'
 
 export type CheckboxGroupProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$CheckboxGroupProps, "checked" | "defaultValue">;
+  Omit<$CheckboxGroupProps, 'checked' | 'defaultValue'>
 
 export const CheckboxGroup = <
   TFieldValues extends FieldValues = FieldValues,
@@ -38,18 +38,18 @@ export const CheckboxGroup = <
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$CheckboxGroup
       error={fieldState.error?.message}
       value={value}
       onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+        fieldOnChange(e)
+        onChange?.(e)
       }}
       {...field}
       {...props}
     />
-  );
-};
+  )
+}

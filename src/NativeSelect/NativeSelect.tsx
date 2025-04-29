@@ -3,18 +3,18 @@ import {
   useController,
   type FieldValues,
   type FieldPath,
-} from "react-hook-form";
+} from 'react-hook-form'
 import {
   NativeSelect as $NativeSelect,
   type NativeSelectProps as $NativeSelectProps,
-} from "@mantine/core";
+} from '@mantine/core'
 
 export type NativeSelectProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$NativeSelectProps, "value" | "defaultValue">;
+  Omit<$NativeSelectProps, 'value' | 'defaultValue'>
 
 export function NativeSelect<
   TFieldValues extends FieldValues = FieldValues,
@@ -38,18 +38,18 @@ export function NativeSelect<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$NativeSelect
       value={value}
       onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+        fieldOnChange(e)
+        onChange?.(e)
       }}
       error={fieldState.error?.message}
       {...field}
       {...props}
     />
-  );
+  )
 }

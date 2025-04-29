@@ -3,14 +3,14 @@ import {
   useController,
   type FieldValues,
   type FieldPath,
-} from "react-hook-form";
-import { Input as $Input, type InputProps as $InputProps } from "@mantine/core";
+} from 'react-hook-form'
+import { Input as $Input, type InputProps as $InputBase } from '@mantine/core'
 
 export type InputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
-> = UseControllerProps<TFieldValues, TName, TTransformedValues> & $InputProps;
+> = UseControllerProps<TFieldValues, TName, TTransformedValues> & $InputBase
 
 export function Input<
   TFieldValues extends FieldValues = FieldValues,
@@ -33,7 +33,7 @@ export function Input<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$Input
@@ -42,5 +42,5 @@ export function Input<
       {...field}
       {...props}
     />
-  );
+  )
 }

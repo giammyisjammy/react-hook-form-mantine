@@ -3,19 +3,19 @@ import {
   type FieldValues,
   useController,
   type UseControllerProps,
-} from "react-hook-form";
+} from 'react-hook-form'
 import {
   MonthPickerInput as $MonthPickerInput,
   type MonthPickerInputProps as $MonthPickerInputProps,
   type DatePickerType,
-} from "@mantine/dates";
+} from '@mantine/dates'
 
 export type MonthPickerInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$MonthPickerInputProps<DatePickerType>, "value" | "defaultValue">;
+  Omit<$MonthPickerInputProps<DatePickerType>, 'value' | 'defaultValue'>
 
 export function MonthPickerInput<
   TFieldValues extends FieldValues = FieldValues,
@@ -39,18 +39,18 @@ export function MonthPickerInput<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$MonthPickerInput
       error={fieldState.error?.message}
       value={value}
       onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+        fieldOnChange(e)
+        onChange?.(e)
       }}
       {...field}
       {...props}
     />
-  );
+  )
 }

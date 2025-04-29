@@ -3,18 +3,18 @@ import {
   useController,
   type FieldValues,
   type FieldPath,
-} from "react-hook-form";
+} from 'react-hook-form'
 import {
   ColorPicker as $ColorPicker,
   type ColorPickerProps as $ColorPickerProps,
-} from "@mantine/core";
+} from '@mantine/core'
 
 export type ColorPickerProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$ColorPickerProps, "value" | "defaultValue">;
+  Omit<$ColorPickerProps, 'value' | 'defaultValue'>
 
 export function ColorPicker<
   TFieldValues extends FieldValues = FieldValues,
@@ -37,17 +37,18 @@ export function ColorPicker<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$ColorPicker
       value={value}
       onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+        fieldOnChange(e)
+        console.log('ColorPicker.onChange', e)
+        onChange?.(e)
       }}
       {...field}
       {...props}
     />
-  );
+  )
 }

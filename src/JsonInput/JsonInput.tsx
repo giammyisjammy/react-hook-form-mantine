@@ -3,18 +3,18 @@ import {
   useController,
   type FieldValues,
   type FieldPath,
-} from "react-hook-form";
+} from 'react-hook-form'
 import {
   JsonInput as $JsonInput,
   type JsonInputProps as $JsonInputProps,
-} from "@mantine/core";
+} from '@mantine/core'
 
 export type JsonInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$JsonInputProps, "value" | "defaultValue">;
+  Omit<$JsonInputProps, 'value' | 'defaultValue'>
 
 export function JsonInput<
   TFieldValues extends FieldValues = FieldValues,
@@ -38,18 +38,18 @@ export function JsonInput<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$JsonInput
       value={value}
       onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+        fieldOnChange(e)
+        onChange?.(e)
       }}
       error={fieldState.error?.message}
       {...field}
       {...props}
     />
-  );
+  )
 }

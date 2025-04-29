@@ -3,11 +3,11 @@ import {
   useController,
   type FieldValues,
   type FieldPath,
-} from "react-hook-form";
+} from 'react-hook-form'
 import {
   FileInput as $FileInput,
   type FileInputProps as $FileInputProps,
-} from "@mantine/core";
+} from '@mantine/core'
 
 export type FileInputProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -15,16 +15,16 @@ export type FileInputProps<
   TTransformedValues = TFieldValues,
   Multiple = false,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$FileInputProps, "value" | "defaultValue" | "multiple"> & {
+  Omit<$FileInputProps, 'value' | 'defaultValue' | 'multiple'> & {
     /** Determines whether user can pick more than one file, `false` by default */
-    multiple?: Multiple;
+    multiple?: Multiple
 
     /** Controlled component value */
-    value?: Multiple extends true ? File[] : File | null;
+    value?: Multiple extends true ? File[] : File | null
 
     /** Uncontrolled component default value */
-    defaultValue?: Multiple extends true ? File[] : File | null;
-  };
+    defaultValue?: Multiple extends true ? File[] : File | null
+  }
 
 export function FileInput<
   TFieldValues extends FieldValues = FieldValues,
@@ -48,7 +48,7 @@ export function FileInput<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$FileInput
@@ -57,5 +57,5 @@ export function FileInput<
       {...field}
       {...props}
     />
-  );
+  )
 }

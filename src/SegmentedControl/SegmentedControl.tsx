@@ -3,18 +3,18 @@ import {
   useController,
   type FieldValues,
   type FieldPath,
-} from "react-hook-form";
+} from 'react-hook-form'
 import {
   SegmentedControl as $SegmentedControl,
   type SegmentedControlProps as $SegmentedControlProps,
-} from "@mantine/core";
+} from '@mantine/core'
 
 export type SegmentedControlProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$SegmentedControlProps, "values" | "defaultValues">;
+  Omit<$SegmentedControlProps, 'values' | 'defaultValues'>
 
 export function SegmentedControl<
   TFieldValues extends FieldValues = FieldValues,
@@ -37,17 +37,17 @@ export function SegmentedControl<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$SegmentedControl
       value={value}
       onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+        fieldOnChange(e)
+        onChange?.(e)
       }}
       {...field}
       {...props}
     />
-  );
+  )
 }

@@ -29,7 +29,7 @@ export * from "./Select/Select";
 export * from "./Slider/Slider";
 export * from "./Switch/Switch";
 export * from "./Switch/SwitchGroup/SwitchGroup";
-export * from "./Textarea/Textarea";
 export * from "./TextInput/TextInput";
+export * from "./Textarea/Textarea";
 export * from "./TimeInput/TimeInput";
 export * from "./YearPickerInput/YearPickerInput";

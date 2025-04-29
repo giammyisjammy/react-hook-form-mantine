@@ -3,18 +3,18 @@ import {
   useController,
   type FieldValues,
   type FieldPath,
-} from "react-hook-form";
+} from 'react-hook-form'
 import {
   MultiSelect as $MultiSelect,
   type MultiSelectProps as $MultiSelectProps,
-} from "@mantine/core";
+} from '@mantine/core'
 
 export type MultiSelectProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$MultiSelectProps, "value" | "defaultValue">;
+  Omit<$MultiSelectProps, 'value' | 'defaultValue'>
 
 export function MultiSelect<
   TFieldValues extends FieldValues = FieldValues,
@@ -38,18 +38,18 @@ export function MultiSelect<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$MultiSelect
       value={value}
       onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+        fieldOnChange(e)
+        onChange?.(e)
       }}
       error={fieldState.error?.message}
       {...field}
       {...props}
     />
-  );
+  )
 }

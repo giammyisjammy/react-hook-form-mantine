@@ -3,18 +3,18 @@ import {
   useController,
   type FieldValues,
   type FieldPath,
-} from "react-hook-form";
+} from 'react-hook-form'
 import {
   SwitchGroup as $SwitchGroup,
   type SwitchGroupProps as $SwitchGroupProps,
-} from "@mantine/core";
+} from '@mantine/core'
 
 export type SwitchGroupProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TTransformedValues = TFieldValues,
 > = UseControllerProps<TFieldValues, TName, TTransformedValues> &
-  Omit<$SwitchGroupProps, "value" | "checked" | "defaultValue">;
+  Omit<$SwitchGroupProps, 'value' | 'checked' | 'defaultValue'>
 
 export function SwitchGroup<
   TFieldValues extends FieldValues = FieldValues,
@@ -38,18 +38,18 @@ export function SwitchGroup<
     defaultValue,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <$SwitchGroup
       value={value}
       onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
+        fieldOnChange(e)
+        onChange?.(e)
       }}
       error={fieldState.error?.message}
       {...field}
       {...props}
     />
-  );
+  )
 }
