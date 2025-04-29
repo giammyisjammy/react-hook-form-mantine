@@ -1,33 +1,33 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Autocomplete } from "./Autocomplete";
-import { withReactHookForm } from "../stories/decorator";
+import type { Meta, StoryObj } from '@storybook/react'
+import { Autocomplete } from './Autocomplete'
+import { withReactHookForm } from '../stories/decorator'
 
 export default {
-  title: "Components/Autocomplete",
+  title: 'Components/Autocomplete',
   component: Autocomplete,
   decorators: [withReactHookForm],
-} satisfies Meta<typeof Autocomplete>;
+} satisfies Meta<typeof Autocomplete>
 
-type Story = StoryObj<typeof Autocomplete>;
+type Story = StoryObj<typeof Autocomplete>
 
 export const Primary: Story = {
   args: {
-    name: "test",
+    name: 'test',
     rules: {
       required: true,
       minLength: {
         value: 20,
-        message: "Too short",
+        message: 'Too short',
       },
     },
-    data: ["React", "Angular", "Vue", "Svelte"],
-    placeholder: "Pick one",
+    data: ['React', 'Angular', 'Vue', 'Svelte'],
+    placeholder: 'Pick one',
   },
   parameters: {
     form: {
       defaultValues: {
-        test: "Rick",
+        test: 'Rick',
       },
     },
   },
-};
+}

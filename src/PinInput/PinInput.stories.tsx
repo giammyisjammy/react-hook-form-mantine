@@ -1,22 +1,22 @@
-import { type Meta, type StoryObj } from "@storybook/react";
-import { PinInput } from "./PinInput";
+import { type Meta, type StoryObj } from '@storybook/react'
+import { PinInput } from './PinInput'
 
 export default {
-  title: "Components/PinInput",
+  title: 'Components/PinInput',
   component: PinInput,
-} satisfies Meta<typeof PinInput>;
+} satisfies Meta<typeof PinInput>
 
-type Story = StoryObj<typeof PinInput>;
+type Story = StoryObj<typeof PinInput>
 
 export const Primary: Story = {
   args: {
-    name: "test",
+    name: 'test',
   },
   parameters: {
     form: {
       defaultValues: {
-        test: "",
+        test: '',
       },
     },
   },
-};
+}

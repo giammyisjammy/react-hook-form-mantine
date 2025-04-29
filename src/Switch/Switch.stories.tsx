@@ -1,16 +1,16 @@
-import { type Meta, type StoryObj } from "@storybook/react";
-import { Switch } from "./Switch";
+import { type Meta, type StoryObj } from '@storybook/react'
+import { Switch } from './Switch'
 
 export default {
-  title: "Components/Switch",
+  title: 'Components/Switch',
   component: Switch,
-} satisfies Meta<typeof Switch>;
+} satisfies Meta<typeof Switch>
 
-type Story = StoryObj<typeof Switch>;
+type Story = StoryObj<typeof Switch>
 
 export const Primary: Story = {
   args: {
-    name: "test",
+    name: 'test',
   },
   parameters: {
     form: {
@@ -19,4 +19,4 @@ export const Primary: Story = {
       },
     },
   },
-};
+}

@@ -1,23 +1,23 @@
-import { type Meta, type StoryObj } from "@storybook/react";
-import { Select } from "./Select";
+import { type Meta, type StoryObj } from '@storybook/react'
+import { Select } from './Select'
 
 export default {
-  title: "Components/Select",
+  title: 'Components/Select',
   component: Select,
-} satisfies Meta<typeof Select>;
+} satisfies Meta<typeof Select>
 
-type Story = StoryObj<typeof Select>;
+type Story = StoryObj<typeof Select>
 
 export const Primary: Story = {
   args: {
-    name: "test",
-    label: "Your favorite framework/library",
-    placeholder: "Pick one",
+    name: 'test',
+    label: 'Your favorite framework/library',
+    placeholder: 'Pick one',
     data: [
-      { label: "React", value: "react" },
-      { label: "Angular", value: "ng" },
-      { label: "Vue", value: "vue" },
-      { label: "Svelte", value: "svelte" },
+      { label: 'React', value: 'react' },
+      { label: 'Angular', value: 'ng' },
+      { label: 'Vue', value: 'vue' },
+      { label: 'Svelte', value: 'svelte' },
     ],
   },
   parameters: {
@@ -27,4 +27,4 @@ export const Primary: Story = {
       },
     },
   },
-};
+}
